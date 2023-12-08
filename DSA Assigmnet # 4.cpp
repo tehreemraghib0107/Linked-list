@@ -6,9 +6,10 @@ class Node {
 public:
     int data;
     Node* next;
-
+Node*prev;
     Node(int value) {
         data = value;
+        
         next = NULL;
     }
 };
@@ -259,16 +260,25 @@ public:
 };
 class doubly {
 public:
-    Node* head;
-    Node* tail;
-
+    doubly* head = NULL;
+    doubly* tail = NULL;
+    doubly* next = NULL;
+    doubly* pre = NULL; // Adding 'pre' pointer for the previous node
+    int data;
+     
     doubly() {
-        head = NULL;
+      
+    }
+
+    doubly(int key) {
+        next = NULL;
+        pre = NULL;
         tail = NULL;
+        data = key;
     }
 
     void display() {
-        Node* temp = head;
+        doubly* temp = head;
         while (temp != NULL) {
             cout << temp->data << endl;
             temp = temp->next;
@@ -276,9 +286,9 @@ public:
     }
 
     void doublyaddHead(int key) {
-        Node* newNode = new Node(key);
-        newNode->next = NULL;
-        newNode->pre = NULL;
+        doubly* newNode = new doubly(key);
+        newNode->head = NULL;
+        newNode->tail = NULL;
         if (head == NULL && tail == NULL) {
             head = newNode;
             tail = newNode;
@@ -290,8 +300,8 @@ public:
         }
     }
 
-    void doublyaddTail(int key) {             
-        Node* newNode = new Node(key);
+    void doublyaddTail(int key) {
+        doubly* newNode = new doubly(key);
         newNode->pre = NULL;
         newNode->next = NULL;
         if (head == NULL && tail == NULL) {
@@ -315,7 +325,7 @@ public:
             head = NULL;
         }
         else {
-            Node* temp = head;
+            doubly* temp = head;
             head = head->next;
             head->pre = NULL;
             delete temp;
@@ -332,15 +342,15 @@ public:
             head = NULL;
         }
         else {
-            Node* temp = tail;
+            doubly* temp = tail;
             tail = tail->pre;
             tail->next = NULL;
             delete temp;
         }
     }
 
-       void doublyinsert(int value, int index) {  //with the help of ai
-        Node* newNode = new Node(value);
+    void doublyinsert(int value, int index) {
+        doubly* newNode = new doubly(value);
         newNode->data = value;
         newNode->next = NULL;
         newNode->pre = NULL;
@@ -354,7 +364,7 @@ public:
             }
         }
         else {
-            Node* t = head;
+            doubly* t = head;
             for (int i = 1; i < index - 1 && t != NULL; i++) {
                 t = t->next;
             }
@@ -371,7 +381,7 @@ public:
     }
 
     int doublymax() {
-        Node* temp = head;
+        doubly* temp = head;
         int max = temp->data;
         temp = temp->next;
         while (temp != NULL) {
@@ -386,7 +396,7 @@ public:
     }
 
     int search(int value) {
-        Node* temp = head;
+        doubly* temp = head;
         while (temp != NULL) {
             if (temp->data == value) {
                 cout << "Element found" << endl;
@@ -398,7 +408,7 @@ public:
     }
 
     int count() {
-        Node* temp = head;
+        doubly* temp = head;
         int count = 0;
         while (temp != NULL) {
             temp = temp->next;
@@ -414,7 +424,7 @@ public:
             return 0;
         }
 
-        Node* current = head;
+        doubly* current = head;
         int sum = 0;
         int count = 0;
 
@@ -429,9 +439,9 @@ public:
     }
 
     void Reverse() {
-        Node* temp = head;
-        Node* prev = NULL;
-        Node* next = NULL;
+        doubly* temp = head;
+        doubly* prev = NULL;
+        doubly* next = NULL;
 
         while (temp != NULL) {
             next = temp->next;
@@ -443,22 +453,13 @@ public:
         }
     }
 
-    bool detectloop() {            //with the help of youtube video
-        Node* low = head;
-        Node* high = head;
+    bool detectloop() {
+        doubly* low = head;
+        doubly* high = head;
         while (high != NULL && high->next != NULL) {
             low = low->next;
             high = high->next->next;
             if (low == high) {
-                return true;
-            }
-        }
-        return false;
-    }
-};
-
-            fast = fast->next->next;
-            if (slow == fast) {
                 return true;
             }
         }
@@ -684,9 +685,7 @@ public:
     CircularDoublyLinkedList() {
         head = NULL;
     }
-CircularDoublyLinkedlist(){
-	   head= NULL;
-	   }
+
 	   
     void insert(int value) {
         NodeDoubly* newNode = new NodeDoubly(value);
@@ -890,9 +889,24 @@ CircularDoublyLinkedlist(){
 };
 
 int main() { 
-
-	singly List;
-    int choice;
+loop :
+  int choice;
+cout << "\nLinked List Operations:\n";
+        cout << "1. Singly Linklist\n";
+        cout << "2. Doubly Linklist\n";
+        cout << "3. Circular Singly Linklist\n";
+        cout << "4. Circular Doubly Linklist\n";
+       
+        cout << "Enter your choice: ";
+        cin >> choice;
+        
+        switch(choice)
+		{
+		case 1:
+		{
+			
+        	singly List;
+  
 
     do {
         cout << "\nLinked List Operations:\n";
@@ -901,23 +915,30 @@ int main() {
         cout << "3. Insert at Index\n";
         cout << "4. Delete at Head\n";
         cout << "5. Delete at Tail\n";
-        cout << "6. Search\n";
-        cout << "7. Display\n";
-        cout << "8. Exit\n";
+        cout << "6. Maximum\n";
+        cout << "7. Average\n";
+        cout << "8. Reverse\n";
+        cout << "9. Palindrome\n";
+        cout << "10. Count nodes\n";
+        cout << "11. Search\n";
+        cout << "12. Display\n";
+        cout << "13. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
 
         switch (choice) {
             case 1:
-                int value;
+				int value;
                 cout << "Enter value to insert: ";
-                cin >> value;
-                List.addHead(value);
+             cin >> value;
+                List.addhead(value);
+                
                 break;
             case 2:
                 cout << "Enter value to insert: ";
                 cin >> value;
-                List.addTail(value);
+        
+                List.addtail(value);
                 break;
             case 3:
                 int index;
@@ -925,15 +946,32 @@ int main() {
                 cin >> index;
                 cout << "Enter value to insert: ";
                 cin >> value;
-                List.insertAtIndex(value, index);
+                List.insert(value, index);
+                
                 break;
             case 4:
-                List.deleteHead();
+                List.deletehead();
                 break;
             case 5:
-                List.deleteTail();
+                List.deletetail();
                 break;
-            case 6:
+            case 6: 
+                List.max();
+                break;
+            case 7:
+            	List.average();
+            	break;
+            case 8:
+            	List.Reverse();
+            	break;
+            case 9:
+            	
+            	cout<<"list is palindrome: "<<List.palindrome();;
+            	break;
+            case 10:
+            	List.count();
+            	break;
+            case 11:
                 cout << "Enter value to search: ";
                 cin >> value;
                 if (List.search(value)) {
@@ -942,19 +980,24 @@ int main() {
                     cout << "Element not found in the list.\n";
                 }
                 break;
-            case 7:
+            case 12:
                 List.display();
                 break;
-            case 8:
+            case 13:
                 cout << "Exiting the program.\n";
                 break;
             default:
                 cout << "Invalid choice. Please try again.\n";
+                break;
         }
-    } while (choice != 8);
+    } while (choice != 13);
+	}
+break;
 
+case 2:
+	{
+	
     doubly myList;
-    int choice;
 
     do {
         cout << "\nDoubly Linked List Operations:\n";
@@ -963,9 +1006,14 @@ int main() {
         cout << "3. Insert at Index\n";
         cout << "4. Delete at Head\n";
         cout << "5. Delete at Tail\n";
-        cout << "6. Search\n";
-        cout << "7. Display\n";
-        cout << "8. Exit\n";
+        cout << "6. Maximum\n";
+        cout << "7. Average\n";
+        cout << "8. Reverse\n";
+        cout << "9. Count nodes\n";
+        cout << "10. Detect loop\n";
+        cout << "11. Search\n";
+        cout << "12. Display\n";
+        cout << "13. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
 
@@ -974,12 +1022,13 @@ int main() {
                 int value;
                 cout << "Enter value to insert: ";
                 cin >> value;
-                myList.addHead(value);
+                myList.doublyaddHead(value);
+				
                 break;
             case 2:
                 cout << "Enter value to insert: ";
                 cin >> value;
-                myList.addTail(value);
+                myList.doublyaddTail(value);
                 break;
             case 3:
                 int index;
@@ -987,15 +1036,30 @@ int main() {
                 cin >> index;
                 cout << "Enter value to insert: ";
                 cin >> value;
-                myList.insertAtIndex(value, index);
+                myList.doublyinsert(value, index);
                 break;
             case 4:
-                myList.deleteHead();
+                myList.doublydeleteHead();
                 break;
             case 5:
-                myList.deleteTail();
+                myList.doublydeleteTail();
                 break;
             case 6:
+                myList.doublymax();
+                break;
+            case 7:
+                myList.average();
+                break;
+            case 8:
+                myList.Reverse();
+                break;
+            case 9:
+                myList.count();
+                break;
+            case 10:
+            	myList.detectloop();
+            	break;
+            case 11:
                 cout << "Enter value to search: ";
                 cin >> value;
                 if (myList.search(value)) {
@@ -1004,28 +1068,38 @@ int main() {
                     cout << "Element not found in the list.\n";
                 }
                 break;
-            case 7:
+            case 12:
                 myList.display();
                 break;
-            case 8:
+            case 13:
                 cout << "Exiting the program.\n";
                 break;
             default:
                 cout << "Invalid choice. Please try again.\n";
         }
-    } while (choice != 8);
-   
+    } while (choice != 13);
+}
+   break;
+   case 3:
+   	{
+	   
    CircularSinglyLinkedList circularList;
-    int choice, value;
-
+    int value;
+int index;
     do {
         cout << "\nCircular Singly Linked List Operations:\n";
         cout << "1. Insert at End\n";
         cout << "2. Insert at Front\n";
-        cout << "3. Delete at Front\n";
-        cout << "4. Delete at End\n";
-        cout << "5. Display\n";
-        cout << "6. Exit\n";
+        cout << "3. Insert at position\n";
+        cout << "4. Delete at Front\n";
+        cout << "5. Delete at End\n";
+        cout << "6. Search\n";
+        cout << "7. Reverse\n";
+        cout << "8. Average\n";
+        cout << "9. Detect loop\n";
+        cout << "10. Maximum\n";
+        cout << "11. Display\n";
+        cout << "12. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
 
@@ -1038,29 +1112,59 @@ int main() {
             case 2:
                 cout << "Enter value to insert at front: ";
                 cin >> value;
-                circularList.insertAtFront(value);
+                circularList.insertfirst(value);
+			
                 break;
             case 3:
-                circularList.deleteAtFront();
+                cout << "Enter value to insert at position: ";
+                cin >> value;
+                cout << "Enter index: ";
+                cin >> index;
+                
+                circularList.insertatindex(value, index);
                 break;
             case 4:
-                circularList.deleteAtEnd();
+                circularList.deletefirst();
+				
                 break;
             case 5:
+                circularList.deletelast();
+                break;
+            case 6:
+                cout << "Enter value to search: ";
+                cin>>value;
+                circularList.search(value);
+                break;
+            case 7:
+                circularList.reverse();
+                break;
+            case 8:
+                circularList.avg();
+                break;
+            case 9: 
+                circularList.detectLoop();
+                break;
+            case 10: 
+                circularList.max();
+                break;
+            case 11:
                 cout << "Circular Singly Linked List: ";
                 circularList.display();
                 break;
-            case 6:
+            case 12:
                 cout << "Exiting the program.\n";
                 break;
             default:
                 cout << "Invalid choice. Please try again.\n";
         }
-    } while (choice != 6);
-
+    } while (choice != 12);
+}
+break;
+case 4:
+{
 
    CircularDoublyLinkedList myLList;
-    int choice;
+
 
     do {
         cout << "\nCircular Doubly Linked List Operations:\n";
@@ -1070,9 +1174,12 @@ int main() {
         cout << "4. Delete at Head\n";
         cout << "5. Delete at Tail\n";
         cout << "6. Search\n";
-        cout << "7. Display Forward\n";
-        cout << "8. Display Backward\n";
-        cout << "9. Exit\n";
+        cout << "7. Maximum\n";
+        cout << "8. Average\n";
+        cout << "9. Reverse\n";
+        cout << "10. Detect loop\n";
+        cout << "11. Display\n";
+        cout << "12. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
 
@@ -1081,12 +1188,13 @@ int main() {
                 int value;
                 cout << "Enter value to insert: ";
                 cin >> value;
-                myLList.addHead(value);
+                myLList.insertfirst(value);
+			
                 break;
             case 2:
                 cout << "Enter value to insert: ";
                 cin >> value;
-                myLList.addTail(value);
+                myLList.insertlast(value);
                 break;
             case 3:
                 int index;
@@ -1094,13 +1202,13 @@ int main() {
                 cin >> index;
                 cout << "Enter value to insert: ";
                 cin >> value;
-                myLList.insertAtIndex(value, index);
+                myLList.insertatindex(value, index);
                 break;
             case 4:
-                myLList.deleteHead();
+                myLList.deletefirst();
                 break;
             case 5:
-                myLList.deleteTail();
+                myLList.deletelast();
                 break;
             case 6:
                 cout << "Enter value to search: ";
@@ -1112,19 +1220,34 @@ int main() {
                 }
                 break;
             case 7:
-                myLList.displayForward();
+               myLList.max();
                 break;
             case 8:
-                myLList.displayBackward();
+                myLList.avg();
                 break;
-            case 9:
+             case 9:
+               myLList.reverse();
+                break;
+            case 10:
+                myLList.detectLoop();
+                break;
+            case 11:
+                myLList.display();
+                break;
+            case 12:
                 cout << "Exiting the program.\n";
                 break;
             default:
                 cout << "Invalid choice. Please try again.\n";
         }
-    } while (choice != 9);
-
+    } while (choice != 12);
+}
+break;
+default :
+	cout<<"Error : Enter Again "<<endl;
+	goto loop;
+	break;
+}
     return 0;
 }
     
